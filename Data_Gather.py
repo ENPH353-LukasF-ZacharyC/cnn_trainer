@@ -19,7 +19,7 @@ class data_collection():
         self.twist_sub = rospy.Subscriber("R1/cmd_vel", Twist, self.get_twist)
         self.img_sub = rospy.Subscriber("/R1/pi_camera/image_raw", Image, self.record_img)
         self.current_twist = None
-        self.data_dir = "/home/fizzer/ros_ws/src/2020_competition/enph353/enph353_gazebo/Data"
+        self.data_dir = os.getcwd()+"/Data"
         self.img_num = self.get_img_num()
         self.bridge = CvBridge()
 
@@ -33,7 +33,7 @@ class data_collection():
         with open(self.data_dir + "/data_" + str(self.img_num + 1) + ".p", "w") as file:
             self.img_num += 1
             pickle.dump(d, file)
-            cv2.imwrite(str(self.img_num) + ".png", i)
+            # cv2.imwrite(str(self.img_num) + ".png", i)
             print(self.current_twist)
         print("image " + str(self.img_num + 1) + " recorded")
 
@@ -45,6 +45,8 @@ class data_collection():
                 self.current_twist = [1,0,0]
             elif t.angular.z < 0:
                 self.current_twist = [0,0,1]
+            else:
+                self.current_twist = None
         else:
             self.current_twist = None
         
