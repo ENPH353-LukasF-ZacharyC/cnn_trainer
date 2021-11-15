@@ -29,11 +29,11 @@ class data_collection():
         d = (img, self.current_twist)
         if self.current_twist is None:
             print("Not Moving")
-            return None
+            # return None
         with open(self.data_dir + "/data_" + str(self.img_num + 1) + ".p", "w") as file:
             self.img_num += 1
-            pickle.dump(d, file)
-            # cv2.imwrite(str(self.img_num) + ".png", i)
+            # pickle.dump(d, file)
+            cv2.imwrite(str(self.img_num) + ".png", i)
             print(self.current_twist)
         print("image " + str(self.img_num + 1) + " recorded")
 
